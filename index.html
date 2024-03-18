@@ -3,104 +3,153 @@
   <head>
     <meta charset="UTF-8" />
 
-    <title>shafiq.dev</title>
+    <script src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-2c7831bb44f98c1391d6a4ffda0e1fd302503391ca806e7fcc7b9b87197aec26.js"></script>
+
+    <title>terminal</title>
 
     <link
-      rel="canonical"
-      href="https://codepen.io/pleasedonotdisturb/pen/poqrZLZ"
+      href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap"
+      rel="stylesheet"
     />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" />
 
     <style>
-      @import url("https://fonts.googleapis.com/css2?family=Figtree&display=swap");
-
-      * {
-        margin: 0;
-        padding: 0;
+      *,
+      *::before,
+      *::after {
         box-sizing: border-box;
-        font-family: "Figtree", sans-serif;
+        font-family: Roboto Mono;
       }
-
+      :focus,
+      :hover,
+      :active {
+        outline: none;
+      }
       body {
-        display: grid;
-        place-content: center;
-        min-height: 100vh;
-        background: #000;
+        margin: 0;
+        overflow: hidden;
       }
-
-      .container {
-        position: relative;
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-        gap: 1em;
-        width: 800px;
-        height: 500px;
-        transition: all 400ms;
-      }
-
-      .container:hover .box {
-        filter: grayscale(100%) opacity(24%);
-      }
-
-      .box {
-        position: relative;
-        background: var(--img) center center;
-        background-size: cover;
-        transition: all 400ms;
+      #app {
+        height: 100vh;
         display: flex;
         justify-content: center;
         align-items: center;
       }
-
-      .container .box:hover {
-        filter: grayscale(0%) opacity(100%);
+      #terminal {
+        width: 90vw;
+        max-width: 900px;
+        height: 550px;
+        transition: 0.2s;
       }
-
-      .container:has(.box-1:hover) {
-        grid-template-columns: 3fr 1fr 1fr 1fr 1fr;
+      #window {
+        height: 40px;
+        display: flex;
+        align-items: center;
+        padding: 0 15px;
+        cursor: default;
       }
-
-      .container:has(.box-2:hover) {
-        grid-template-columns: 1fr 3fr 1fr 1fr 1fr;
+      .btn {
+        margin-right: 10px;
+        border: none;
+        height: 13px;
+        width: 13px;
+        border-radius: 50%;
+        box-shadow: 0 2px 2px #33333375;
       }
-
-      .container:has(.box-3:hover) {
-        grid-template-columns: 1fr 1fr 3fr 1fr 1fr;
+      .red {
+        background-color: #ff4136;
       }
-
-      .container:has(.box-4:hover) {
-        grid-template-columns: 1fr 1fr 1fr 3fr 1fr;
+      .error {
+        color: #ff4136;
       }
-
-      .container:has(.box-5:hover) {
-        grid-template-columns: 1fr 1fr 1fr 1fr 3fr;
+      .yellow {
+        background-color: #ffdc00;
       }
-
-      .box:nth-child(odd) {
-        transform: translateY(-16px);
+      .info {
+        color: #ffdc00;
       }
-
-      .box:nth-child(even) {
-        transform: translateY(16px);
+      .green {
+        background-color: #2ecc40;
       }
-
-      .box::after {
-        content: attr(data-text);
-        position: absolute;
-        bottom: 20px;
-        background: #000;
-        color: #fff;
-        padding: 10px 10px 10px 14px;
-        letter-spacing: 4px;
-        text-transform: uppercase;
-        transform: translateY(60px);
-        opacity: 0;
-        transition: all 400ms;
+      #title,
+      #field {
+        font-size: 0.85rem;
       }
-
-      .box:hover::after {
-        transform: translateY(0);
-        opacity: 1;
-        transition-delay: 400ms;
+      #title {
+        margin-left: auto;
+      }
+      #field {
+        height: calc(100% - 40px);
+        padding: 5px;
+        overflow: auto;
+        /* 	I'd like to get white-space: break-spaces to work
+		but it won't for some reason. In the meantime,
+		overflow-wrap: break-word will have to do. */
+        overflow-wrap: break-word;
+      }
+      #field::-webkit-scrollbar {
+        width: 10px;
+      }
+      #field.dark::-webkit-scrollbar-thumb {
+        background-color: #333444;
+      }
+      #field.light::-webkit-scrollbar-thumb {
+        background-color: #aca9bb;
+      }
+      #field > div {
+        min-height: 20px;
+        width: 100%;
+        cursor: default;
+      }
+      #input-container {
+        display: flex;
+      }
+      #query,
+      #cursor {
+        display: inline-block;
+      }
+      #query {
+        margin-right: 10px;
+        white-space: pre-line;
+      }
+      #cursor {
+        position: relative;
+        bottom: -2px;
+        left: 2px;
+        width: 0.5rem;
+        height: 3px;
+      }
+      @keyframes blink-dark {
+        0%,
+        100% {
+          background-color: #f4f4f4;
+        }
+        50% {
+          background-color: transparent;
+        }
+      }
+      @keyframes blink-light {
+        0%,
+        100% {
+          background-color: #474554;
+        }
+        50% {
+          background-color: transparent;
+        }
+      }
+      @media only screen and (max-width: 600px), (max-height: 600px) {
+        #terminal {
+          height: 100vh;
+          width: 100vw;
+          min-width: 100vw;
+        }
+        #field {
+          height: 100%;
+        }
+        #window {
+          display: none;
+        }
       }
     </style>
 
@@ -110,32 +159,956 @@
   </head>
 
   <body translate="no">
-    <div class="container">
-      <div
-        class="box box-1"
-        style="--img: url(https://i.postimg.cc/sgBkfbtx/img-1.jpg)"
-        data-text="Renji"
-      ></div>
-      <div
-        class="box box-2"
-        style="--img: url(https://i.postimg.cc/3RZ6bhDS/img-2.jpg)"
-        data-text="Sora"
-      ></div>
-      <div
-        class="box box-3"
-        style="--img: url(https://i.postimg.cc/DZhHg0m4/img-3.jpg)"
-        data-text="Kaito"
-      ></div>
-      <div
-        class="box box-4"
-        style="--img: url(https://i.postimg.cc/KjqWx5ft/img-4.jpg)"
-        data-text="Tsuki"
-      ></div>
-      <div
-        class="box box-5"
-        style="--img: url(https://i.postimg.cc/nrcWyW4H/img-5.jpg)"
-        data-text="Mitsui"
-      ></div>
-    </div>
+    <div id="root"></div>
+    <!-- IF YOU'RE USING THE BRAVE BROWSER, TURN OFF THE SHIELD -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.12.0/umd/react.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.11.0/umd/react-dom.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/6.6.0/math.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-simple-keyboard@2.1.113/build/index.min.js"></script>
+    <script id="rendered-js">
+      const App = () => {
+        const [theme, setTheme] = React.useState("dark");
+        const themeVars =
+          theme === "dark"
+            ? {
+                app: { backgroundColor: "#333444" },
+                terminal: { boxShadow: "0 2px 5px #111" },
+                window: { backgroundColor: "#222345", color: "#F4F4F4" },
+                field: {
+                  backgroundColor: "#222333",
+                  color: "#F4F4F4",
+                  fontWeight: "normal",
+                },
+                cursor: { animation: "1.02s blink-dark step-end infinite" },
+              }
+            : {
+                app: { backgroundColor: "#ACA9BB" },
+                terminal: { boxShadow: "0 2px 5px #33333375" },
+                window: { backgroundColor: "#5F5C6D", color: "#E3E3E3" },
+                field: {
+                  backgroundColor: "#E3E3E3",
+                  color: "#474554",
+                  fontWeight: "bold",
+                },
+                cursor: { animation: "1.02s blink-light step-end infinite" },
+              };
+
+        return /*#__PURE__*/ React.createElement(
+          "div",
+          { id: "app", style: themeVars.app } /*#__PURE__*/,
+          React.createElement(Terminal, {
+            theme: themeVars,
+            setTheme: setTheme,
+          })
+        );
+      };
+      const Terminal = ({ theme, setTheme }) => {
+        const [maximized, setMaximized] = React.useState(false);
+        const [title, setTitle] = React.useState("Terminal");
+        const handleClose = () => (window.location.href = "");
+        const handleMinMax = () => {
+          setMaximized(!maximized);
+          document.querySelector("#field").focus();
+        };
+
+        return /*#__PURE__*/ React.createElement(
+          "div",
+          {
+            id: "terminal",
+            style: maximized
+              ? { height: "100vh", width: "100vw", maxWidth: "100vw" }
+              : theme.terminal,
+          } /*#__PURE__*/,
+          React.createElement(
+            "div",
+            { id: "window", style: theme.window } /*#__PURE__*/,
+            React.createElement("button", {
+              className: "btn red",
+              onClick: handleClose,
+            }) /*#__PURE__*/,
+            React.createElement("button", {
+              id: "useless-btn",
+              className: "btn yellow",
+            }) /*#__PURE__*/,
+            React.createElement("button", {
+              className: "btn green",
+              onClick: handleMinMax,
+            }) /*#__PURE__*/,
+            React.createElement(
+              "span",
+              { id: "title", style: { color: theme.window.color } },
+              title
+            )
+          ) /*#__PURE__*/,
+
+          React.createElement(Field, {
+            theme: theme,
+            setTheme: setTheme,
+            setTitle: setTitle,
+          })
+        );
+      };
+      class Field extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = {
+            commandHistory: [],
+            commandHistoryIndex: 0,
+            fieldHistory: [
+              { text: "Terminal" },
+              {
+                text: "Type HELP to see the full list of commands.",
+                hasBuffer: true,
+              },
+            ],
+            userInput: "",
+            isMobile: false,
+          };
+
+          this.recognizedCommands = [
+            {
+              command: "help",
+              purpose: "Provides help information for Terminal commands.",
+            },
+            {
+              command: "date",
+              purpose: "Displays the current date.",
+            },
+            {
+              command: "start",
+              purpose:
+                "Launches a specified URL in a new tab or separate window.",
+              help: [
+                "START <URL>",
+                "Launches a specified URL in a new tab or separate window.",
+                "",
+                "URL......................The website you want to open.",
+              ],
+            },
+
+            {
+              command: "cls",
+              purpose: "Clears the screen.",
+            },
+            {
+              command: "cmd",
+              purpose: "Starts a new instance of the Terminal.",
+            },
+            {
+              command: "theme",
+              purpose: "Sets the color scheme of the Terminal.",
+              help: [
+                "THEME <L|LIGHT|D|DARK> [-s, -save]",
+                "Sets the color scheme of the Terminal.",
+                "",
+                "L, LIGHT.................Sets the color scheme to light mode.",
+                "D, DARK..................Sets the color scheme to dark mode.",
+                "",
+                "-s, -save................Saves the setting to localStorage.",
+              ],
+            },
+
+            {
+              command: "exit",
+              purpose:
+                "Quits the Terminal and returns to Shafiq's portfolio page.",
+            },
+            {
+              command: "time",
+              purpose: "Displays the current time.",
+            },
+            {
+              command: "about",
+              isMain: true,
+              purpose: "Displays basic information about Shafiq.",
+            },
+            {
+              command: "experience",
+              isMain: true,
+              purpose: "Displays information about Shafiq's experience.",
+            },
+            {
+              command: "skills",
+              isMain: true,
+              purpose:
+                "Displays information about Shafiq's skills as a developer.",
+            },
+            {
+              command: "contact",
+              isMain: true,
+              purpose: "Displays contact information for Shafiq.",
+            },
+            {
+              command: "projects",
+              isMain: true,
+              purpose:
+                "Displays information about what projects Shafiq has done in the past.",
+            },
+            {
+              command: "project",
+              isMain: true,
+              purpose:
+                "Launches a specified project in a new tab or separate window.",
+              help: [
+                "PROJECT <TITLE>",
+                "Launches a specified project in a new tab or separate window.",
+                "List of projects currently include:",
+                "Bengkel Angular",
+                "PuniUrl",
+                "Taggen",
+                "Forum",
+                "Simon",
+                "",
+                "TITLE....................The title of the project you want to view.",
+              ],
+            },
+
+            {
+              command: "title",
+              purpose: "Sets the window title for the Terminal.",
+              help: [
+                "TITLE <INPUT>",
+                "Sets the window title for the Terminal.",
+                "",
+                "INPUT....................The title you want to use for the Terminal window.",
+              ],
+            },
+
+            ...["google", "duckduckgo", "bing"].map((cmd) => {
+              const properCase =
+                cmd === "google"
+                  ? "Google"
+                  : cmd === "duckduckgo"
+                  ? "DuckDuckGo"
+                  : "Bing";
+
+              return {
+                command: cmd,
+                purpose: `Searches a given query using ${properCase}.`,
+                help: [
+                  `${cmd.toUpperCase()} <QUERY>`,
+                  `Searches a given query using ${properCase}. If no query is provided, simply launches ${properCase}.`,
+                  "",
+                  `QUERY....................It\'s the same as if you were to type inside the ${properCase} search bar.`,
+                ],
+              };
+            }),
+          ];
+          this.handleTyping = this.handleTyping.bind(this);
+          this.handleInputEvaluation = this.handleInputEvaluation.bind(this);
+          this.handleInputExecution = this.handleInputExecution.bind(this);
+          this.handleContextMenuPaste = this.handleContextMenuPaste.bind(this);
+        }
+        componentDidMount() {
+          if (
+            typeof window.orientation !== "undefined" ||
+            navigator.userAgent.indexOf("IEMobile") !== -1
+          ) {
+            this.setState((state) => ({
+              isMobile: true,
+              fieldHistory: [
+                ...state.fieldHistory,
+                { isCommand: true },
+                {
+                  text: `Unfortunately due to this application being an 'input-less' environment, mobile is not supported. I'm working on figuring out how to get around this, so please bear with me! In the meantime, come on back if you're ever on a desktop.`,
+                  isError: true,
+                  hasBuffer: true,
+                },
+              ],
+            }));
+          } else {
+            const userElem = document.querySelector("#field");
+            const themePref = window.localStorage.getItem(
+              "reactTerminalThemePref"
+            );
+
+            // Disable this if you're working on a fork with auto run enabled... trust me.
+            userElem.focus();
+
+            document
+              .querySelector("#useless-btn")
+              .addEventListener("click", () =>
+                this.setState((state) => ({
+                  fieldHistory: [
+                    ...state.fieldHistory,
+                    { isCommand: true },
+                    {
+                      text: "SYS >> That button doesn't do anything.",
+                      hasBuffer: true,
+                    },
+                  ],
+                }))
+              );
+
+            if (themePref) {
+              this.props.setTheme(themePref);
+            }
+          }
+        }
+        componentDidUpdate() {
+          const userElem = document.querySelector("#field");
+
+          userElem.scrollTop = userElem.scrollHeight;
+        }
+        handleTyping(e) {
+          e.preventDefault();
+
+          const { key, ctrlKey, altKey } = e;
+          const forbidden = [
+            ...Array.from({ length: 12 }, (x, y) => `F${y + 1}`),
+            "ContextMenu",
+            "Meta",
+            "NumLock",
+            "Shift",
+            "Control",
+            "Alt",
+            "CapsLock",
+            "Tab",
+            "ScrollLock",
+            "Pause",
+            "Insert",
+            "Home",
+            "PageUp",
+            "Delete",
+            "End",
+            "PageDown",
+          ];
+
+          if (!forbidden.some((s) => s === key) && !ctrlKey && !altKey) {
+            if (key === "Backspace") {
+              this.setState(
+                (state) => (state.userInput = state.userInput.slice(0, -1))
+              );
+            } else if (key === "Escape") {
+              this.setState({ userInput: "" });
+            } else if (key === "ArrowUp" || key === "ArrowLeft") {
+              const { commandHistory, commandHistoryIndex } = this.state;
+              const upperLimit = commandHistoryIndex >= commandHistory.length;
+
+              if (!upperLimit) {
+                this.setState((state) => ({
+                  commandHistoryIndex: (state.commandHistoryIndex += 1),
+                  userInput:
+                    state.commandHistory[state.commandHistoryIndex - 1],
+                }));
+              }
+            } else if (key === "ArrowDown" || key === "ArrowRight") {
+              const { commandHistory, commandHistoryIndex } = this.state;
+              const lowerLimit = commandHistoryIndex === 0;
+
+              if (!lowerLimit) {
+                this.setState((state) => ({
+                  commandHistoryIndex: (state.commandHistoryIndex -= 1),
+                  userInput:
+                    state.commandHistory[state.commandHistoryIndex - 1] || "",
+                }));
+              }
+            } else if (key === "Enter") {
+              const { userInput } = this.state;
+
+              if (userInput.length) {
+                this.setState(
+                  (state) => ({
+                    commandHistory:
+                      userInput === ""
+                        ? state.commandHistory
+                        : [userInput, ...state.commandHistory],
+                    commandHistoryIndex: 0,
+                    fieldHistory: [
+                      ...state.fieldHistory,
+                      { text: userInput, isCommand: true },
+                    ],
+                    userInput: "",
+                  }),
+                  () => this.handleInputEvaluation(userInput)
+                );
+              } else {
+                this.setState((state) => ({
+                  fieldHistory: [...state.fieldHistory, { isCommand: true }],
+                }));
+              }
+            } else {
+              this.setState((state) => ({
+                commandHistoryIndex: 0,
+                userInput: (state.userInput += key),
+              }));
+            }
+          }
+        }
+        handleInputEvaluation(input) {
+          try {
+            const evaluatedForArithmetic = math.evaluate(input);
+
+            if (!isNaN(evaluatedForArithmetic)) {
+              return this.setState((state) => ({
+                fieldHistory: [
+                  ...state.fieldHistory,
+                  { text: evaluatedForArithmetic },
+                ],
+              }));
+            }
+
+            throw Error;
+          } catch (err) {
+            const { recognizedCommands, giveError, handleInputExecution } =
+              this;
+            const cleanedInput = input.toLowerCase().trim();
+            const dividedInput = cleanedInput.split(" ");
+            const parsedCmd = dividedInput[0];
+            const parsedParams = dividedInput
+              .slice(1)
+              .filter((s) => s[0] !== "-");
+            const parsedFlags = dividedInput
+              .slice(1)
+              .filter((s) => s[0] === "-");
+            const isError = !recognizedCommands.some(
+              (s) => s.command === parsedCmd
+            );
+
+            if (isError) {
+              return this.setState((state) => ({
+                fieldHistory: [...state.fieldHistory, giveError("nr", input)],
+              }));
+            }
+
+            return handleInputExecution(parsedCmd, parsedParams, parsedFlags);
+          }
+        }
+        handleInputExecution(cmd, params = [], flags = []) {
+          if (cmd === "help") {
+            if (params.length) {
+              if (params.length > 1) {
+                return this.setState((state) => ({
+                  fieldHistory: [
+                    ...state.fieldHistory,
+                    this.giveError("bp", { cmd: "HELP", noAccepted: 1 }),
+                  ],
+                }));
+              }
+
+              const cmdsWithHelp = this.recognizedCommands.filter(
+                (s) => s.help
+              );
+
+              if (cmdsWithHelp.filter((s) => s.command === params[0]).length) {
+                return this.setState((state) => ({
+                  fieldHistory: [
+                    ...state.fieldHistory,
+                    {
+                      text: cmdsWithHelp.filter(
+                        (s) => s.command === params[0]
+                      )[0].help,
+                      hasBuffer: true,
+                    },
+                  ],
+                }));
+              } else if (
+                this.recognizedCommands.filter((s) => s.command === params[0])
+                  .length
+              ) {
+                return this.setState((state) => ({
+                  fieldHistory: [
+                    ...state.fieldHistory,
+                    {
+                      text: [
+                        `No additional help needed for ${this.recognizedCommands
+                          .filter((s) => s.command === params[0])[0]
+                          .command.toUpperCase()}`,
+                        this.recognizedCommands.filter(
+                          (s) => s.command === params[0]
+                        )[0].purpose,
+                      ],
+
+                      hasBuffer: true,
+                    },
+                  ],
+                }));
+              }
+
+              return this.setState((state) => ({
+                fieldHistory: [
+                  ...state.fieldHistory,
+                  this.giveError("up", params[0].toUpperCase()),
+                ],
+              }));
+            }
+
+            return this.setState((state) => ({
+              fieldHistory: [
+                ...state.fieldHistory,
+                {
+                  text: [
+                    "Main commands:",
+                    ...this.recognizedCommands
+                      .sort((a, b) => a.command.localeCompare(b.command))
+                      .filter(({ isMain }) => isMain)
+                      .map(
+                        ({ command, purpose }) =>
+                          `${command.toUpperCase()}${Array.from(
+                            { length: 15 - command.length },
+                            (x) => "."
+                          ).join("")}${purpose}`
+                      ),
+                    "",
+                    "All commands:",
+                    ...this.recognizedCommands
+                      .sort((a, b) => a.command.localeCompare(b.command))
+                      .map(
+                        ({ command, purpose }) =>
+                          `${command.toUpperCase()}${Array.from(
+                            { length: 15 - command.length },
+                            (x) => "."
+                          ).join("")}${purpose}`
+                      ),
+                    "",
+                    "For help about a specific command, type HELP <CMD>, e.g. HELP PROJECT.",
+                  ],
+
+                  hasBuffer: true,
+                },
+              ],
+            }));
+          } else if (cmd === "cls") {
+            return this.setState({ fieldHistory: [] });
+          } else if (cmd === "start") {
+            if (params.length === 1) {
+              return this.setState(
+                (state) => ({
+                  fieldHistory: [
+                    ...state.fieldHistory,
+                    { text: `Launching ${params[0]}...`, hasBuffer: true },
+                  ],
+                }),
+                () =>
+                  window.open(
+                    /http/i.test(params[0]) ? params[0] : `https://${params[0]}`
+                  )
+              );
+            }
+
+            return this.setState((state) => ({
+              fieldHistory: [
+                ...state.fieldHistory,
+                this.giveError("bp", { cmd: "START", noAccepted: 1 }),
+              ],
+            }));
+          } else if (cmd === "date") {
+            return this.setState((state) => ({
+              fieldHistory: [
+                ...state.fieldHistory,
+                {
+                  text: `The current date is: ${new Date(
+                    Date.now()
+                  ).toLocaleDateString()}`,
+                  hasBuffer: true,
+                },
+              ],
+            }));
+          } else if (cmd === "cmd") {
+            return this.setState(
+              (state) => ({
+                fieldHistory: [
+                  ...state.fieldHistory,
+                  {
+                    text: "Launching new instance of the Terminal...",
+                    hasBuffer: true,
+                  },
+                ],
+              }),
+              () => window.open("https://github.com/shafiq97")
+            );
+          } else if (cmd === "theme") {
+            const { setTheme } = this.props;
+            const validParams =
+              params.length === 1 &&
+              ["d", "dark", "l", "light"].some((s) => s === params[0]);
+            const validFlags = flags.length
+              ? flags.length === 1 &&
+                (flags[0] === "-s" || flags[0] === "-save")
+                ? true
+                : false
+              : true;
+
+            if (validParams && validFlags) {
+              const themeToSet =
+                params[0] === "d" || params[0] === "dark" ? "dark" : "light";
+
+              return this.setState(
+                (state) => ({
+                  fieldHistory: [
+                    ...state.fieldHistory,
+                    {
+                      text: `Set the theme to ${themeToSet.toUpperCase()} mode`,
+                      hasBuffer: true,
+                    },
+                  ],
+                }),
+                () => {
+                  if (
+                    flags.length === 1 &&
+                    (flags[0] === "-s" || flags[0] === "-save")
+                  ) {
+                    window.localStorage.setItem(
+                      "reactTerminalThemePref",
+                      themeToSet
+                    );
+                  }
+
+                  setTheme(themeToSet);
+                }
+              );
+            }
+
+            return this.setState((state) => ({
+              fieldHistory: [
+                ...state.fieldHistory,
+                this.giveError(
+                  !validParams ? "bp" : "bf",
+                  !validParams ? { cmd: "THEME", noAccepted: 1 } : "THEME"
+                ),
+              ],
+            }));
+          } else if (cmd === "exit") {
+            return (window.location.href = "https://github.com/shafiq97");
+          } else if (cmd === "time") {
+            return this.setState((state) => ({
+              fieldHistory: [
+                ...state.fieldHistory,
+                {
+                  text: `The current time is: ${new Date(
+                    Date.now()
+                  ).toLocaleTimeString()}`,
+                  hasBuffer: true,
+                },
+              ],
+            }));
+          } else if (cmd === "about") {
+            return this.setState((state) => ({
+              fieldHistory: [
+                ...state.fieldHistory,
+                {
+                  text: [
+                    "Hey there!",
+                    `My name is Shafiq. I'm a software engineer based in Selangor specializing in the JavaScript ecosystem.`,
+                    `Type CONTACT if you'd like to get in touch - otherwise I hope you enjoy using the rest of the app!`,
+                  ],
+                  hasBuffer: true,
+                },
+              ],
+            }));
+          } else if (cmd === "experience") {
+            return this.setState((state) => ({
+              fieldHistory: [
+                ...state.fieldHistory,
+                {
+                  text: [
+                    "Industry Experience:",
+                    "Frontend:",
+                    "Angular",
+                    "React",
+                    "Vue",
+                    "Flutter",
+                    "",
+                    "Backend:",
+                    ".NET",
+                    "Laravel",
+                    "Springboot",
+                    "",
+                  ],
+                  hasBuffer: true,
+                },
+              ],
+            }));
+          } else if (cmd === "skills") {
+            return this.setState((state) => ({
+              fieldHistory: [
+                ...state.fieldHistory,
+                {
+                  text: [
+                    "Languages:",
+                    "HTML",
+                    "CSS",
+                    "JavaScript",
+                    "",
+                    "Libraries/Frameworks:",
+                    "Node",
+                    "Express",
+                    "React",
+                    "Next",
+                    "React Native",
+                    "jQuery",
+                    "",
+                    "Other:",
+                    "Git",
+                    "GitHub",
+                    "Heroku",
+                    "Firebase",
+                  ],
+                  hasBuffer: true,
+                },
+              ],
+            }));
+          } else if (cmd === "contact") {
+            return this.setState((state) => ({
+              fieldHistory: [
+                ...state.fieldHistory,
+                {
+                  text: [
+                    "Email: muhammadshafiq457@gmail.com",
+                    "Website: shafiq.dev",
+                    "LinkedIn: muhammadshafiq457",
+                    "GitHub: @shafiq97",
+                  ],
+                  hasBuffer: true,
+                },
+              ],
+            }));
+          } else if (cmd === "projects") {
+            return this.setState((state) => ({
+              fieldHistory: [
+                ...state.fieldHistory,
+                {
+                  text: [
+                    "To view any of these projects live or their source files, type PROJECT <TITLE>, e.g. PROJECT Bengkel Angular.",
+
+                    "Bengkel PHP",
+                    "Built with PHP,HTML,CSS,JS",
+                    `My first bengkel and tutoring other students as well, back in university`,
+                    "",
+                    "Bengkel Angular",
+                    "Built with Angular",
+                    `Some time ago, I became increasingly interested in Angular development. This led to the creation of "Bengkel Angular," a workshop where I've honed my skills in building dynamic and responsive web applications with Angular. It’s been an engaging journey to dive deep into Angular’s powerful capabilities and best practices.`,
+                    "",
+                    "Bengkel Flutter",
+                    "Fluttered with its simplicity, I have to tell others too!",
+                    "",
+                    "Finance forecasting",
+                    "Built with Python api (REST), Firebase for auth and Flutter for mobile app",
+                    "",
+                    "Sign Language Translator",
+                    "Built with Tensorflow js",
+                    `Basically my Final Year Project :D`,
+                    "",
+                  ],
+                  hasBuffer: true,
+                },
+              ],
+            }));
+          } else if (cmd === "project") {
+            if (params.length === 1) {
+              const projects = [
+                {
+                  title: "Bengkel Angular",
+                  live: "https://github.com/shafiq97/Bengkel-Angular",
+                },
+                {
+                  title: "Bengkel PHP",
+                  live: "https://github.com/shafiq97/bengkelphpday1",
+                },
+                {
+                  title: "Bengkel Flutter",
+                  live: "https://github.com/shafiq97/flutter_workshop",
+                },
+              ];
+
+              return this.setState(
+                (state) => ({
+                  fieldHistory: [
+                    ...state.fieldHistory,
+                    { text: `Launching ${params[0]}...`, hasBuffer: true },
+                  ],
+                }),
+                () =>
+                  window.open(
+                    projects.filter((s) => s.title === params[0])[0].live
+                  )
+              );
+            }
+
+            return this.setState((state) => ({
+              fieldHistory: [
+                ...state.fieldHistory,
+                this.giveError("bp", { cmd: "PROJECT", noAccepted: 1 }),
+              ],
+            }));
+          } else if (cmd === "title") {
+            return this.setState(
+              (state) => ({
+                fieldHistory: [
+                  ...state.fieldHistory,
+                  {
+                    text: `Set the Terminal title to ${
+                      params.length > 0 ? params.join(" ") : "<BLANK>"
+                    }`,
+                    hasBuffer: true,
+                  },
+                ],
+              }),
+
+              () =>
+                this.props.setTitle(params.length > 0 ? params.join(" ") : "")
+            );
+          } else if (["google", "duckduckgo", "bing"].some((s) => s === cmd)) {
+            if (cmd === "google") {
+              return this.setState((state) => ({
+                fieldHistory: [
+                  ...state.fieldHistory,
+                  {
+                    text: "Sorry, Google is a POS.",
+                    hasBuffer: true,
+                  },
+                ],
+              }));
+            }
+            return this.setState(
+              (state) => ({
+                fieldHistory: [
+                  ...state.fieldHistory,
+                  {
+                    text: params.length
+                      ? `Searching ${cmd.toUpperCase()} for ${params.join(
+                          " "
+                        )}...`
+                      : `Launching ${cmd.toUpperCase()}...`,
+                    hasBuffer: true,
+                  },
+                ],
+              }),
+
+              () =>
+                window.open(
+                  params.length
+                    ? `https://www.${cmd}.com/${
+                        cmd === "google" ? "search" : ""
+                      }?q=${params.join("+")}`
+                    : `https://${cmd}.com/`,
+                  "_blank"
+                )
+            );
+          }
+        }
+        handleContextMenuPaste(e) {
+          e.preventDefault();
+
+          if ("clipboard" in navigator) {
+            navigator.clipboard.readText().then((clipboard) =>
+              this.setState((state) => ({
+                userInput: `${state.userInput}${clipboard}`,
+              }))
+            );
+          }
+        }
+        giveError(type, extra) {
+          const err = { text: "", isError: true, hasBuffer: true };
+
+          if (type === "nr") {
+            err.text = `${extra} : The term or expression '${extra}' is not recognized. Check the spelling and try again. If you don't know what commands are recognized, type HELP.`;
+          } else if (type === "nf") {
+            err.text = `The ${extra} command requires the use of flags. If you don't know what flags can be used, type HELP ${extra}.`;
+          } else if (type === "bf") {
+            err.text = `The flags you provided for ${extra} are not valid. If you don't know what flags can be used, type HELP ${extra}.`;
+          } else if (type === "bp") {
+            err.text = `The ${extra.cmd} command requires ${extra.noAccepted} parameter(s). If you don't know what parameter(s) to use, type HELP ${extra.cmd}.`;
+          } else if (type === "up") {
+            err.text = `The command ${extra} is not supported by the HELP utility.`;
+          }
+
+          return err;
+        }
+        render() {
+          const { theme } = this.props;
+          const { fieldHistory, userInput } = this.state;
+
+          return /*#__PURE__*/ React.createElement(
+            "div",
+            {
+              id: "field",
+              className:
+                theme.app.backgroundColor === "#333444" ? "dark" : "light",
+              style: theme.field,
+              onKeyDown: (e) => this.handleTyping(e),
+              tabIndex: 0,
+              onContextMenu: (e) => this.handleContextMenuPaste(e),
+            },
+
+            fieldHistory.map(({ text, isCommand, isError, hasBuffer }) => {
+              if (Array.isArray(text)) {
+                return /*#__PURE__*/ React.createElement(MultiText, {
+                  input: text,
+                  isError: isError,
+                  hasBuffer: hasBuffer,
+                });
+              }
+
+              return /*#__PURE__*/ React.createElement(Text, {
+                input: text,
+                isCommand: isCommand,
+                isError: isError,
+                hasBuffer: hasBuffer,
+              });
+            }) /*#__PURE__*/,
+            React.createElement(UserText, {
+              input: userInput,
+              theme: theme.cursor,
+            })
+          );
+        }
+      }
+
+      const Text = ({ input, isCommand, isError, hasBuffer }) =>
+        /*#__PURE__*/ React.createElement(
+          React.Fragment,
+          null /*#__PURE__*/,
+          React.createElement(
+            "div",
+            null,
+            isCommand &&
+              /*#__PURE__*/ React.createElement(
+                "div",
+                { id: "query" },
+                "AzureShafiq C:\\Users\\Guest>"
+              ) /*#__PURE__*/,
+            React.createElement(
+              "span",
+              { className: !isCommand && isError ? "error" : "" },
+              input
+            )
+          ),
+
+          hasBuffer && /*#__PURE__*/ React.createElement("div", null)
+        );
+
+      const MultiText = ({ input, isError, hasBuffer }) =>
+        /*#__PURE__*/ React.createElement(
+          React.Fragment,
+          null,
+          input.map((s) =>
+            /*#__PURE__*/ React.createElement(Text, {
+              input: s,
+              isError: isError,
+            })
+          ),
+          hasBuffer && /*#__PURE__*/ React.createElement("div", null)
+        );
+
+      const UserText = ({ input, theme }) =>
+        /*#__PURE__*/ React.createElement(
+          "div",
+          null /*#__PURE__*/,
+          React.createElement(
+            "div",
+            { id: "query" },
+            "AzureShafiq C:\\Users\\Guest>"
+          ) /*#__PURE__*/,
+          React.createElement("span", null, input) /*#__PURE__*/,
+          React.createElement("div", { id: "cursor", style: theme })
+        );
+
+      ReactDOM.render(
+        /*#__PURE__*/ React.createElement(App, null),
+        document.querySelector("#root")
+      );
+      //# sourceURL=pen.js
+    </script>
   </body>
 </html>
