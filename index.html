@@ -1,1 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Full Page Form with Bootstrap</title>
+    <!-- Google Font CDN -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Include Bootstrap CSS -->
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body
+    class="bg-primary d-flex align-items-center justify-content-center text-white"
+    style="height: 100vh"
+  >
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4">
+          <div class="text-center mb-4">
+            <h5 class="font-weight-bold">
+              Sila masukkan nombor telefon anda untuk menerima notis tiket
+              melalui SMS
+            </h5>
+            <p>
+              Please enter your mobile number to receive ticket notification via
+              SMS
+            </p>
+          </div>
+
+          <form>
+            <div class="form-group text-center">
+              <label for="countryCode"
+                >Kod panggilan negara / Country code</label
+              >
+              <select class="form-control" id="countryCode">
+                <option>Malaysia</option>
+                <!-- Add other country options here -->
+              </select>
+            </div>
+
+            <div class="form-group text-center">
+              <label for="mobileNumber">Nombor telefon / Mobile number</label>
+              <input
+                type="tel"
+                class="form-control"
+                id="mobileNumber"
+                placeholder="Enter mobile number"
+              />
+            </div>
+
+            <button type="submit" class="btn btn-warning btn-block">
+              Dapatkan tiket / Get a ticket
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Include Bootstrap JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>
 
