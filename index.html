@@ -20,7 +20,7 @@
         text-align: center;
       }
       .form-spacing .btn {
-        margin-top: 24px; /* or any other value */
+        margin-top: 48px; /* Increased space above the button */
       }
       .form-header {
         margin-bottom: 48px; /* additional space below the header */
@@ -45,7 +45,7 @@
   <body
     class="bg-primary vh-100 d-flex align-items-center justify-content-center"
   >
-    <div class="w-100 px-3" style="max-width: 400px">
+    <div class="w-100 px-3 py-5" style="max-width: 400px">
       <div class="form-header text-center">
         <h5 class="text-white">
           Sila masukkan nombor telefon anda untuk menerima notis tiket melalui
@@ -65,14 +65,20 @@
             ></label
           >
           <select class="form-control" id="countryCode">
-            <option>Malaysia</option>
-            <!-- Add other country options here -->
+            <option value="" data-country-code="">Select a country</option>
+            <option value="Malaysia" data-country-code="+60">Malaysia</option>
+            <option value="United States" data-country-code="+1">
+              United States
+            </option>
           </select>
         </div>
 
         <div class="form-group">
-          <label for="mobileNumber" class="form-label"
-            > <b>Nombor telefon <br> Mobile number</b></label
+          <label for="mobileNumber" class="form-label">
+            <b
+              >Nombor telefon <br />
+              Mobile number</b
+            ></label
           >
           <input
             type="tel"
@@ -93,5 +99,19 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var countrySelect = document.getElementById("countryCode");
+        var mobileNumberInput = document.getElementById("mobileNumber");
+
+        countrySelect.addEventListener("change", function () {
+          var selectedCountryCode =
+            countrySelect.options[countrySelect.selectedIndex].getAttribute(
+              "data-country-code"
+            );
+          mobileNumberInput.value = selectedCountryCode;
+        });
+      });
+    </script>
   </body>
 </html>
