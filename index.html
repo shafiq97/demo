@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Full Page Form with Bootstrap</title>
+    <title>Responsive Full-Page Form</title>
     <!-- Google Font CDN -->
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
@@ -14,52 +14,79 @@
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
       rel="stylesheet"
     />
+    <style>
+      .form-spacing .form-group {
+        margin-bottom: 24px; /* or any other value */
+        text-align: center;
+      }
+      .form-spacing .btn {
+        margin-top: 24px; /* or any other value */
+      }
+      .form-header {
+        margin-bottom: 48px; /* additional space below the header */
+      }
+
+      .form-label {
+        color: #ffe002;
+      }
+
+      .get-ticket {
+        background-color: #ffe002; /* Yellow background */
+        border: none;
+        border-radius: 30px; /* Rounded corners */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Slight box-shadow */
+        color: #000; /* Text color */
+        padding: 10px 25px; /* Padding inside the button */
+        font-size: 16px; /* Text size */
+        transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+      }
+    </style>
   </head>
   <body
-    class="bg-primary d-flex align-items-center justify-content-center text-white"
-    style="height: 100vh"
+    class="bg-primary vh-100 d-flex align-items-center justify-content-center"
   >
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-md-6 col-lg-4">
-          <div class="text-center mb-4">
-            <h5 class="font-weight-bold">
-              Sila masukkan nombor telefon anda untuk menerima notis tiket
-              melalui SMS
-            </h5>
-            <p>
-              Please enter your mobile number to receive ticket notification via
-              SMS
-            </p>
-          </div>
-
-          <form>
-            <div class="form-group text-center">
-              <label for="countryCode"
-                >Kod panggilan negara / Country code</label
-              >
-              <select class="form-control" id="countryCode">
-                <option>Malaysia</option>
-                <!-- Add other country options here -->
-              </select>
-            </div>
-
-            <div class="form-group text-center">
-              <label for="mobileNumber">Nombor telefon / Mobile number</label>
-              <input
-                type="tel"
-                class="form-control"
-                id="mobileNumber"
-                placeholder="Enter mobile number"
-              />
-            </div>
-
-            <button type="submit" class="btn btn-warning btn-block">
-              Dapatkan tiket / Get a ticket
-            </button>
-          </form>
-        </div>
+    <div class="w-100 px-3" style="max-width: 400px">
+      <div class="form-header text-center">
+        <h5 class="text-white">
+          Sila masukkan nombor telefon anda untuk menerima notis tiket melalui
+          SMS
+        </h5>
+        <p class="text-white">
+          Please enter your mobile number to receive ticket notification via SMS
+        </p>
       </div>
+
+      <form class="form-spacing">
+        <div class="form-group">
+          <label for="countryCode" class="form-label"
+            ><b
+              >Kod panggilan negara <br />
+              Country code</b
+            ></label
+          >
+          <select class="form-control" id="countryCode">
+            <option>Malaysia</option>
+            <!-- Add other country options here -->
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="mobileNumber" class="form-label"
+            > <b>Nombor telefon <br> Mobile number</b></label
+          >
+          <input
+            type="tel"
+            class="form-control"
+            id="mobileNumber"
+            placeholder="Enter mobile number"
+          />
+        </div>
+
+        <button type="submit" class="btn get-ticket btn btn-block">
+          <b>Dapatkan tiket</b> <br />
+          Get a ticket
+        </button>
+      </form>
     </div>
 
     <!-- Include Bootstrap JS, Popper.js, and jQuery -->
@@ -68,4 +95,3 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   </body>
 </html>
-
