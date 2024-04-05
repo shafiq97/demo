@@ -36,8 +36,8 @@ body {
 .v1_3 {
   width: 70%;
   max-width: 500px;
-  height: 33.42%;
-  top: 21%;
+  height: 39.42%;
+  top: 15vh;
   left: 50%;
   transform: translateX(-50%);
   background: var(--ticket-bg);
@@ -50,7 +50,7 @@ body {
 }
 
 .v1_3 .ticket-header {
-  font-size: 2rem;
+  font-size: 1.5rem;
   text-align: center;
   color: var(--primary-color);
   font-weight: 400;
@@ -75,7 +75,7 @@ body {
 }
 
 .v1_3 .ticket-info {
-  font-size: 2rem;
+  font-size: 1.5rem;
   text-align: center;
   color: var(--primary-color);
   font-weight: 400;
