@@ -1,0 +1,31 @@
+@import url("variables.css");
+
+body {
+  background-color: var(--primary-color);
+}
+
+.form-spacing .form-group {
+  margin-bottom: 24px;
+  text-align: center;
+}
+.form-spacing .btn {
+  margin-top: 48px;
+}
+.form-header {
+  margin-bottom: 48px;
+}
+
+.form-label {
+  color: var(--secondary-color);
+}
+
+.get-ticket {
+  background-color: var(--secondary-color);
+  border: none;
+  border-radius: 30px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  color: #000;
+  padding: 10px 25px;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
