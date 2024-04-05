@@ -1,0 +1,135 @@
+@import url("variables.css");
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html,
+body {
+  width: 100%;
+  height: 100%;
+  font-size: 14px;
+}
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f0f0f0;
+  flex-direction: column;
+}
+
+.v1_2 {
+  width: 100%;
+  min-height: 100vh;
+  background: var(--primary-color);
+  position: relative;
+  overflow: hidden;
+}
+.v1_3,
+.v5_3 {
+  position: absolute;
+  border-radius: 60px;
+  overflow: hidden;
+}
+.v1_3 {
+  width: 70%;
+  max-width: 500px;
+  height: 33.42%;
+  top: 21%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--ticket-bg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  color: var(--text-primary);
+}
+
+.v1_3 .ticket-header {
+  font-size: 2rem;
+  text-align: center;
+  color: var(--primary-color);
+  font-weight: 400;
+}
+
+.ticket-sub-header {
+  font-size: 1rem;
+  text-align: center;
+  color: var(--primary-color);
+  font-weight: 400;
+  margin-bottom: 10px;
+}
+
+.v1_3 .ticket-number {
+  font-size: 5rem;
+  font-weight: bold;
+  color: var(--secondary-color);
+  background-color: var(--primary-color);
+  border-radius: 30px;
+  padding: 10px 20px;
+  margin-bottom: 15px;
+}
+
+.v1_3 .ticket-info {
+  font-size: 2rem;
+  text-align: center;
+  color: var(--primary-color);
+  font-weight: 400;
+}
+
+.v5_3 {
+  width: 70%;
+  max-width: 500px;
+  height: 4.21%;
+  top: 51.2%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--secondary-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.date-time {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+  font-weight: 300;
+}
+
+.footer {
+  width: 100%;
+  background-color: var(--secondary-color);
+  padding: 1rem 0;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.footer-content {
+  color: var(--primary-color);
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.container.text-center {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+@media (max-width: 428px) {
+  html {
+    font-size: 12px;
+  }
+  .v1_2 {
+    max-width: 100%;
+    min-height: 100vh;
+  }
+}
