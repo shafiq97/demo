@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ticket</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link href="./css/ticket.css" rel="stylesheet" />
+  </head>
+  <body class="d-flex align-items-center justify-content-center vh-100">
+    <div class="v1_2">
+      <div class="v1_3">
+        <div class="ticket-header">Nombor giliran anda</div>
+        <div class="ticket-sub-header">Your ticket number</div>
+        <div class="ticket-number">1257</div>
+        <div class="ticket-info">Masa tiket dikeluarkan <br /></div>
+        <div class="ticket-sub-header">Time of ticket issued</div>
+      </div>
+      <div class="v5_3">
+        <div id="currentDateTime" class="date-time"></div>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <div class="container text-center">
+        <p class="footer-content">
+          Sila pergi ke kaunter 4 <br />
+          Please proceed to counter 4
+        </p>
+      </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+      function updateDateTime() {
+        var now = new Date();
+        var date =
+          now.getDate() + "/" + (now.getMonth() + 1) + "/" + now.getFullYear();
+        var time = now.getHours() + ":" + now.getMinutes();
+        document.getElementById("currentDateTime").textContent =
+          date + " | " + time;
+      }
+      updateDateTime();
+    </script>
+  </body>
+</html>
