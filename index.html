@@ -3,47 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Responsive Full-Page Form</title>
-    <!-- Google Font CDN -->
+    <title>Mock Form</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
       rel="stylesheet"
     />
-    <!-- Include Bootstrap CSS -->
     <link
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
       rel="stylesheet"
     />
-    <style>
-      .form-spacing .form-group {
-        margin-bottom: 24px; /* or any other value */
-        text-align: center;
-      }
-      .form-spacing .btn {
-        margin-top: 48px; /* Increased space above the button */
-      }
-      .form-header {
-        margin-bottom: 48px; /* additional space below the header */
-      }
-
-      .form-label {
-        color: #ffe002;
-      }
-
-      .get-ticket {
-        background-color: #ffe002; /* Yellow background */
-        border: none;
-        border-radius: 30px; /* Rounded corners */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Slight box-shadow */
-        color: #000; /* Text color */
-        padding: 10px 25px; /* Padding inside the button */
-        font-size: 16px; /* Text size */
-        transition: background-color 0.3s ease; /* Smooth transition for hover effect */
-      }
-    </style>
+    <link rel="stylesheet" href="css/index.css" />
   </head>
   <body
-    class="bg-primary vh-100 d-flex align-items-center justify-content-center"
+    class="vh-100 d-flex align-items-center justify-content-center"
   >
     <div class="w-100 px-3 py-5" style="max-width: 400px">
       <div class="form-header text-center">
@@ -56,7 +28,7 @@
         </p>
       </div>
 
-      <form class="form-spacing">
+      <form action="ticket.html" class="form-spacing">
         <div class="form-group">
           <label for="countryCode" class="form-label"
             ><b
@@ -64,7 +36,7 @@
               Country code</b
             ></label
           >
-          <select class="form-control" id="countryCode">
+          <select class="form-control" id="countryCode" required>
             <option value="" data-country-code="">Select a country</option>
             <option value="Malaysia" data-country-code="+60">Malaysia</option>
             <option value="United States" data-country-code="+1">
@@ -81,6 +53,7 @@
             ></label
           >
           <input
+            required
             type="tel"
             class="form-control"
             id="mobileNumber"
@@ -95,7 +68,6 @@
       </form>
     </div>
 
-    <!-- Include Bootstrap JS, Popper.js, and jQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
